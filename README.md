@@ -10,6 +10,8 @@ About the attacks at the application layer like SQL Injection, XSS, or Path trav
 
 Attack on the network layers like DDoS, we create some iptables rules to check and limit the rate of input packets to the server. Besides that, we use Snort to alert the attack. Also, we analyze the Snort log by Python in order to block traffic from dangerous IP addresses.
 
+You can see the details in Docs folder.
+
 ## Contributors
 
 - Cao Kieu Van Manh
