@@ -1,0 +1,46 @@
+# cách luật tự thiết lập cho snort, có thể thay đổi để phù hợp với hệ thống
+# $Id: local.rules,v 1.11 2004/07/23 20:15:44 bmc Exp $
+# ----------------
+# LOCAL RULES
+# ----------------
+# This file intentionally does not come with signatures.  Put your local
+# additions here.
+
+# cảnh bảo ddos
+alert icmp any any -> $HOME_NET any (msg:"ICMP flood"; sid:1000001; rev:1; classtype:icmp-event; detection_filter:track by_dst, count 500, seconds 3;)
+
+alert tcp any any -> $HOME_NET 80 (flags: S; msg:"SYN Flood DDoS Attack"; flow:stateless; sid:3; detection_filter:track by_dst, count 100, seconds 10;)
+alert tcp any any -> any any (msg:"Flood DDoS Attack"; flags:S; threshold: type threshold, track by_dst, count 600, seconds 60; sid:100002; rev:1;)
+
+drop tcp any any -> $HOME_NET 80 (flags: S; flow:stateless; sid:4; detection_filter:track by_dst, count 20, seconds 10;)
+
+alert tcp any any -> $HOME_NET any (msg:"HTTP Flood Attack"; flow:to_server,established; content:"GET"; pcre:"/^GET\s.+\sHTTP\/1\.1$/"; sid:1000002; rev:1;)
+
+alert tcp any any -> $HOME_NET 80 (msg:"HTTP Flood Attack (hping3 flood mode)"; flow:to_server,established; content:"GET"; pcre:"/^GET\s.+\sHTTP\/1\.1$/"; uricontent:".hping3"; threshold:type both, track by_src, count 100, seconds 1; sid:1000003; rev:1;)
+
+alert udp any any -> $HOME_NET any (msg:"UDP Flood Attack"; flow:to_server; threshold:type both, track by_src, count 100, seconds 1; sid:1000004; rev:1;)
+
+# cảnh báo quét cổng
+alert tcp any any -> $HOME_NET any (msg:"Port Scan Attempt - Be careful of attack!"; flow:to_server; content:"SYN"; pcre:"/SYN.{0,10}NULL/"; flags:S; threshold:type threshold, track by_src, count 10, seconds 60; sid:1000005; rev:1;)
+
+alert tcp any any -> $HOME_NET any (msg:"nmap Scan Attempt - Be careful of attack!"; flow:to_server; content:"SYN"; pcre:"/SYN.{0,10}NMAP/"; flags:S; threshold:type threshold, track by_src, count 10, seconds 60; sid:1000006; rev:1;)
+
+
+
+
+
+# cảnh báo sqli
+#alert tcp any any -> any 80 (msg: "Possible Form Based SQL Injection Detected"; content: "%27" ; sid:1000008; )
+#alert tcp any any -> any 80 (msg: "Possible Order by SQL Injection"; content: "order" ; sid:1000009; )
+alert tcp any any -> any 80 (msg: "Possible UNION SELECT SQL Injection"; content: "union" ; sid:1000010; )
+
+#cảnh báo xss
+alert tcp any any -> $HOME_NET any (msg: "Possible XSS Attempt"; content:"script"; sid:10000007; rev:002;)
+alert tcp any any -> $HOME_NET any (msg: "Possible XSS Attempt"; content:"img"; sid:10000008; rev:002;)
+#alert tcp any any -> $HOME_NET any (msg: "Possible XSS Attempt"; content:"%3C"; sid:10000009; rev:002;)
+#alert tcp any any -> $HOME_NET any (msg: "Possible XSS Attempt"; content:"%3E"; sid:10000010; rev:002;)
+alert tcp any any -> $HOME_NET any (msg: "Possible XSS Attempt"; flow: to_server, established; content:"<script>"; nocase; classtype:attempted-user; sid:10000011; rev:1;)
+
+#cảnh báo path traversal
+alert tcp any any -> $HOME_NET any (msg:"Possible Path Traversal Attempt"; content:"./"; nocase; pcre:"/\.\.\//"; sid:1000011; rev:1;)
+alert tcp any any -> $HOME_NET any (msg:"Possible Path Traversal Attempt"; flow: to_server, established; content:"../"; nocase; classtype:attempted-user; sid:1000012; rev:1;)

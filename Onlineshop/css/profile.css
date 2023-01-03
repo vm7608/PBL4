@@ -1,0 +1,74 @@
+.list-btn-profile {
+    font-size: 24px;
+    text-transform: uppercase;
+    font-weight: 500;
+    font-family: serif;
+}
+.list-btn-profile .btn-profile {
+    border-bottom: 2px solid #a0a0a0;
+    padding: 20px;
+    cursor: pointer;
+}
+.list-btn-profile .btn-profile:hover {
+    background-color: #2828c8;
+    color: white
+}
+.content {
+    margin: 30px 0px;
+    font-family: "Times New Roman", Times, serif;
+    font-size: 18px;
+}
+.title {
+    font-size: 30px;
+    text-transform: uppercase;
+    font-weight: bolder;
+}
+.account-info {
+    border-top: 2px solid #aaaaaa;
+    margin-top:20px;
+}
+.user-info {
+    border-top: 2px solid #aaaaaa;
+}
+.mono-info {
+    margin-left: 40px;
+    padding: 10px;
+}
+
+.table-order {
+    width: 100%;
+    text-align: left;
+    margin: 20px 0px;
+    font-size: 24px;
+    font-weight: 500;
+}
+.info-shipping {
+    border-top: 3px solid #a0a0a0;
+    border-bottom: 3px solid #a0a0a0;
+}
+.info-shipping div {
+    padding: 10px;
+}
+.table-info {
+    width: 90%;
+    text-align: left;
+    margin: 20px 0px 20px 50px;
+    font-size: 18px;
+    font-weight: 500;
+}
+.table-info tr td{
+    padding: 10px 0px;
+}
+.table-info tr td input{
+    border: none;
+    border-bottom: 2px solid black;
+}
+.table-info tr td input:focus{
+    outline: none;
+    border-bottom: 3px solid lightskyblue;
+}
+.submit-button {
+    border-radius: 10px;
+    background-image: linear-gradient(0deg, #dddddd, transparent);
+    padding: 5px 20px;
+}
